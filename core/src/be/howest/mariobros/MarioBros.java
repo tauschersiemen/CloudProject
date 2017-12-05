@@ -1,5 +1,6 @@
 package be.howest.mariobros;
 
+import be.howest.mariobros.Screen.MenuScreen;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
@@ -45,7 +46,7 @@ public class MarioBros extends Game {
 		manager.load("audio/sounds/mariodie.wav", Sound.class);
 		manager.finishLoading();
 
-		setScreen(new PlayScreen(this));
+		setScreen(new MenuScreen(this));
 	}
 
 	@Override

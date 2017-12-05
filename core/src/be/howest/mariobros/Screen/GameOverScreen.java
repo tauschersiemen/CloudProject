@@ -31,7 +31,7 @@ public class GameOverScreen implements Screen {
         viewport = new FitViewport(MarioBros.V_WIDTH, MarioBros.V_HEIGHT, new OrthographicCamera());
         stage = new Stage(viewport, ((MarioBros)game).batch);
 
-        Label.LabelStyle font = new Label.LabelStyle(new BitmapFont(), Color.WHITE);
+        Label.LabelStyle font = new Label.LabelStyle(new BitmapFont(), Color.valueOf("006699"));
 
         Table table = new Table();
         table.center();
@@ -53,7 +53,7 @@ public class GameOverScreen implements Screen {
     @Override
     public void render(float delta) {
         if(Gdx.input.justTouched()) {
-            game.setScreen(new PlayScreen((MarioBros) game));
+            game.setScreen(new PlayScreen((MarioBros) game,1));
             dispose();
         }
         Gdx.gl.glClearColor(0,0,0,1);

@@ -94,6 +94,8 @@ public class WorldContactListener implements ContactListener {
                 Gdx.app.log("fire", "collision");
 
                 break;
+
+
         }
     }
 

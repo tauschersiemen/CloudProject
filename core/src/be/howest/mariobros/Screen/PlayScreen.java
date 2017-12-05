@@ -58,12 +58,15 @@ public class PlayScreen implements Screen{
     private Array<Item> items;
     private LinkedBlockingQueue<ItemDef> itemsToSpawn;
 
+    private int nextLevel;
 
 
-    public PlayScreen(MarioBros game){
+    public PlayScreen(MarioBros game, int level){
         atlas = new TextureAtlas("Mario_and_Enemies.pack");
 
         this.game = game;
+
+        this.nextLevel = level +1;
         //create cam used to follow mario through the cam world;
         gamecam = new OrthographicCamera();
 
@@ -71,11 +74,11 @@ public class PlayScreen implements Screen{
         gamePort = new FitViewport(MarioBros.V_WIDTH / MarioBros.PPM, MarioBros.V_HEIGHT / MarioBros.PPM, gamecam);
 
         //create our game HUD for scores/timers/level info
-        hud = new Hud(game.batch);
+        hud = new Hud(game.batch, level);
 
         //Load our map and setup our map renderer
         mapLoader = new TmxMapLoader();
-        map = mapLoader.load("level1.tmx");
+        map = mapLoader.load("level"+level+".tmx");
         renderer = new OrthogonalTiledMapRenderer(map, 1/ MarioBros.PPM);
         gamecam.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
 
@@ -192,8 +195,7 @@ public class PlayScreen implements Screen{
         hud.stage.draw();
 
         if(gameOver()){
-            game.setScreen(new GameOverScreen(game));
-            dispose();
+            showGameOver();
         }
     }
 
@@ -202,6 +204,16 @@ public class PlayScreen implements Screen{
             return true;
         }
         return false;
+    }
+
+    public void showGameOver(){
+        game.setScreen(new GameOverScreen(game));
+        dispose();
+    }
+
+    public void toNextLevel(){
+        game.setScreen(new PlayScreen(game, nextLevel));
+        dispose();
     }
 
     @Override
