@@ -7,6 +7,12 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+
 
 public class MenuScreen implements Screen {
     MarioBros game;
@@ -25,12 +31,24 @@ public class MenuScreen implements Screen {
     private static final int TROPHY_X = Gdx.graphics.getWidth()/2-63;
     private static final int TROPHY_Y = Gdx.graphics.getHeight()/2 -150;
 
-    public MenuScreen(MarioBros game){
+
+    public MenuScreen(MarioBros game) {
         this.game = game;
         playButton = new Texture("playbtn.png");
         leaderbord = new Texture("trophy.png");
         background = new Texture("Mario.png");
 
+        /*StringBuilder result = new StringBuilder();
+        URL url = new URL("https://us-central1-mariobros-187710.cloudfunctions.net/getAllUsers");
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("GET");
+        BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+        String line;
+        while ((line = rd.readLine()) != null) {
+            result.append(line);
+        }
+        rd.close();
+        System.out.print(result.toString());*/
     }
 
     @Override
