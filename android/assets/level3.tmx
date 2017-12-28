@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="240" height="13" tilewidth="16" tileheight="16" nextobjectid="110">
+<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="240" height="13" tilewidth="16" tileheight="16" nextobjectid="111">
  <tileset firstgid="1" source="tileset_gutter.tsx"/>
  <layer name="background" width="240" height="13">
   <data encoding="base64" compression="zlib">
-   eJztwzEJAAAMA7Ay/4bqrir2JZBeUlVVVVVVVVVVVVVV1ccDxULniQ==
+   eJzt00EJwEAABLGjUsa/gXPXqigs5BEJ6ZzT5z7AmvyFWfkLs/IXZuUvzMpfmJW/MCt/YVb+wqz8hVn5C7PyFwB+9wJfhdkx
   </data>
  </layer>
  <layer name="graphics" width="240" height="13">
@@ -57,6 +57,7 @@
   <object id="45" x="1536" y="128" width="32" height="64"/>
   <object id="46" x="3600" y="160" width="32" height="32"/>
   <object id="49" x="3632" y="128" width="32" height="64"/>
+  <object id="110" x="2" y="0" width="29" height="201"/>
  </objectgroup>
  <objectgroup name="coins">
   <object id="50" x="224" y="64" width="16" height="16"/>

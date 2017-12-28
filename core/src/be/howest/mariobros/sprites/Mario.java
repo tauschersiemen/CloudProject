@@ -15,6 +15,7 @@ import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.ui.TextTooltip;
 import com.badlogic.gdx.utils.Array;
 
 import be.howest.mariobros.MarioBros;
@@ -44,6 +45,7 @@ public class Mario extends Sprite {
     private TextureRegion bigMarioJump;
     private Animation<TextureRegion> bigMarioRun;
     private Animation<TextureRegion> growMario;
+    private Animation<TextureRegion> firing;
 
     private float stateTimer;
     private boolean runningRight;
@@ -227,7 +229,7 @@ public class Mario extends Sprite {
 
     public void defineMario() {
         BodyDef bdef = new BodyDef();
-        bdef.position.set(32 / MarioBros.PPM,32 / MarioBros.PPM);
+        bdef.position.set(200 / MarioBros.PPM,32 / MarioBros.PPM);
         bdef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bdef);
 
@@ -251,9 +253,7 @@ public class Mario extends Sprite {
 
     }
 
-    public void fire(){
-        fireBalls.add(new FireBall(screen, b2body.getPosition().x, b2body.getPosition().y, runningRight ? true : false));
-    }
+
 
     public void draw(Batch batch){
         super.draw(batch);
@@ -337,6 +337,11 @@ public class Mario extends Sprite {
             b2body.applyLinearImpulse(new Vector2(0, 4f), b2body.getWorldCenter(), true);
             currentState = State.Jumping;
         }
+    }
+
+    public void fire(){
+        if(fireBalls.size == 0)
+            fireBalls.add(new FireBall(screen, b2body.getPosition().x, b2body.getPosition().y, runningRight ? true : false));
     }
 
     public boolean isBig(){

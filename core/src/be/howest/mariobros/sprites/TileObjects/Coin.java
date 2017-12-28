@@ -6,6 +6,8 @@ import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.tiled.TiledMapTileSet;
 import com.badlogic.gdx.math.Vector2;
 
+import java.util.concurrent.TimeUnit;
+
 import be.howest.mariobros.MarioBros;
 import be.howest.mariobros.Scenes.Hud;
 import be.howest.mariobros.Screen.PlayScreen;
@@ -19,6 +21,7 @@ import be.howest.mariobros.sprites.Mario;
  */
 
 public class Coin extends  InteractiveTileObject{
+
     private static TiledMapTileSet tileSet;
     private final int BLANK_COIN = 28;
     public Coin(PlayScreen screen, MapObject object){
@@ -39,10 +42,12 @@ public class Coin extends  InteractiveTileObject{
                         Mushroom.class));
                 MarioBros.manager.get("audio/sounds/powerup_spawn.wav", Sound.class).play();
 
-            }else
+            }else {
                 MarioBros.manager.get("audio/sounds/coin.wav", Sound.class).play();
+                Hud.addScore(100);
+            }
         }
         getCell().setTile(tileSet.getTile(BLANK_COIN));
-        Hud.addScore(100);
+
     }
 }

@@ -89,7 +89,7 @@ public class PlayScreen implements Screen{
 
 
         world = new World(new Vector2(0,-10), true);
-        b2dr = new Box2DDebugRenderer();
+        //b2dr = new Box2DDebugRenderer();
 
         creator = new B2WorldCreator(this);
 
@@ -160,8 +160,12 @@ public class PlayScreen implements Screen{
 
         hud.update(dt);
 
-        if(player.currentState != Mario.State.Dead)
-            gamecam.position.x = player.b2body.getPosition().x;
+        if(player.currentState != Mario.State.Dead){
+            if(player.b2body.getPosition().x > 200/MarioBros.PPM){
+                gamecam.position.x = player.b2body.getPosition().x;
+            }
+        }
+
 
         gamecam.update();
         renderer.setView(gamecam);
@@ -180,7 +184,7 @@ public class PlayScreen implements Screen{
         renderer.render();
 
         //renderer our Box2DDebugLines
-        b2dr.render(world, gamecam.combined);
+//        b2dr.render(world, gamecam.combined);
 
         //set our batch
 
@@ -250,7 +254,7 @@ public class PlayScreen implements Screen{
         map.dispose();
         renderer.dispose();
         world.dispose();
-        b2dr.dispose();
+//        b2dr.dispose();
         hud.dispose();
     }
 
