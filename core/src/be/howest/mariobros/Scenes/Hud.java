@@ -26,7 +26,8 @@ public class Hud implements Disposable{
     private float timeCount;
     private static Integer score;
     private boolean timeUp;
-
+    private int level;
+    private Table table;
     private Label countdownLabel;
     private static Label scoreLabel;
     private Label timeLabel;
@@ -38,18 +39,18 @@ public class Hud implements Disposable{
         worldTimer= 300;
         timeCount = 0;
         score = 0;
-
         viewport = new FitViewport(MarioBros.V_WIDTH,MarioBros.V_HEIGHT, new OrthographicCamera());
         stage = new Stage(viewport, sb);
+        this.level = level;
 
-        Table table = new Table();
-        table.top();
-        table.setFillParent(true);
+        this.table = new Table();
+        this.table.top();
+        this.table.setFillParent(true);
 
         countdownLabel = new Label(String.format("%03d", worldTimer), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         scoreLabel = new Label(String.format("%06d", score), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         timeLabel  = new Label("TIME", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        levelLabel = new Label("1-"+level, new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        levelLabel = new Label("1", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         worldLabel = new Label("WORLD", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         marioLabel = new Label("MARIO", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 
@@ -81,6 +82,11 @@ public class Hud implements Disposable{
         score += value;
         scoreLabel.setText(String.format("%06d", score));
     }
+
+    public int getScore(){
+        return score;
+    }
+
 
     @Override
     public void dispose() {

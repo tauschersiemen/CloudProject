@@ -61,7 +61,7 @@ public class PlayScreen implements Screen{
     private int nextLevel;
 
 
-    public PlayScreen(MarioBros game, int level){
+    public PlayScreen(MarioBros game, int level, Hud hud){
         atlas = new TextureAtlas("Mario_and_Enemies.pack");
 
         this.game = game;
@@ -74,7 +74,12 @@ public class PlayScreen implements Screen{
         gamePort = new FitViewport(MarioBros.V_WIDTH / MarioBros.PPM, MarioBros.V_HEIGHT / MarioBros.PPM, gamecam);
 
         //create our game HUD for scores/timers/level info
-        hud = new Hud(game.batch, level);
+        if(level == 1){
+            this.hud = new Hud(game.batch,level);
+            Gdx.app.log("test", "new hud");
+        }else{
+            this.hud = hud;
+        }
 
         //Load our map and setup our map renderer
         mapLoader = new TmxMapLoader();
@@ -91,7 +96,7 @@ public class PlayScreen implements Screen{
         player = new Mario(this);
 
 
-        world.setContactListener(new WorldContactListener());
+        world.setContactListener(new WorldContactListener(game, this,nextLevel));
 
        music = MarioBros.manager.get("audio/music/mario_music.ogg", Music.class);
         music.setLooping(true);
@@ -208,11 +213,6 @@ public class PlayScreen implements Screen{
 
     public void showGameOver(){
         game.setScreen(new GameOverScreen(game));
-        dispose();
-    }
-
-    public void toNextLevel(){
-        game.setScreen(new PlayScreen(game, nextLevel));
         dispose();
     }
 

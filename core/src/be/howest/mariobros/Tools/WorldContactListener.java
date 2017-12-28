@@ -1,11 +1,8 @@
 package be.howest.mariobros.Tools;
 
+import be.howest.mariobros.Screen.PlayScreen;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.physics.box2d.Contact;
-import com.badlogic.gdx.physics.box2d.ContactImpulse;
-import com.badlogic.gdx.physics.box2d.ContactListener;
-import com.badlogic.gdx.physics.box2d.Fixture;
-import com.badlogic.gdx.physics.box2d.Manifold;
+import com.badlogic.gdx.physics.box2d.*;
 
 import be.howest.mariobros.MarioBros;
 import be.howest.mariobros.sprites.Enemies.Enemy;
@@ -21,6 +18,16 @@ import be.howest.mariobros.sprites.TileObjects.InteractiveTileObject;
 
 public class WorldContactListener implements ContactListener {
 
+    private MarioBros game;
+    private int nextLevel;
+    private PlayScreen screen;
+
+    public WorldContactListener(MarioBros game, PlayScreen screen, int nextLevel){
+        this.game = game;
+        this.screen = screen;
+        this.nextLevel = nextLevel;
+    }
+
     @Override
     public void beginContact(Contact contact) {
         Fixture fixA = contact.getFixtureA();
@@ -33,8 +40,9 @@ public class WorldContactListener implements ContactListener {
         switch (cdef){
             case MarioBros.MARIO_HEAD_BIT | MarioBros.BRICK_BIT:
             case MarioBros.MARIO_HEAD_BIT | MarioBros.COIN_BIT:
-                if(fixA.getFilterData().categoryBits == MarioBros.MARIO_HEAD_BIT)
+                if(fixA.getFilterData().categoryBits == MarioBros.MARIO_HEAD_BIT){
                     ((InteractiveTileObject) fixB.getUserData()).onHeadHit((Mario) fixA.getUserData());
+                }
                 else
                     ((InteractiveTileObject) fixA.getUserData()).onHeadHit((Mario) fixB.getUserData());
                 break;
@@ -94,8 +102,9 @@ public class WorldContactListener implements ContactListener {
                 Gdx.app.log("fire", "collision");
 
                 break;
-
-
+            case MarioBros.MARIO_BIT | MarioBros.LEVEL_BIT:
+                game.setScreen(new PlayScreen(game, this.nextLevel,screen.getHud()));
+                break;
         }
     }
 

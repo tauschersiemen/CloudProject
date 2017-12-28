@@ -1,5 +1,6 @@
 package be.howest.mariobros.Screen;
 
+import be.howest.mariobros.Scenes.Hud;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -53,7 +54,7 @@ public class GameOverScreen implements Screen {
     @Override
     public void render(float delta) {
         if(Gdx.input.justTouched()) {
-            game.setScreen(new PlayScreen((MarioBros) game,1));
+            game.setScreen(new PlayScreen((MarioBros) game,1, null));
             dispose();
         }
         Gdx.gl.glClearColor(0,0,0,1);

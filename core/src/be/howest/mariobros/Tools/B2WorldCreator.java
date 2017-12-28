@@ -1,5 +1,6 @@
 package be.howest.mariobros.Tools;
 
+import be.howest.mariobros.sprites.TileObjects.Level;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -18,6 +19,7 @@ import be.howest.mariobros.sprites.Enemies.Goomba;
 import be.howest.mariobros.sprites.Enemies.Turtle;
 import be.howest.mariobros.sprites.TileObjects.Brick;
 import be.howest.mariobros.sprites.TileObjects.Coin;
+import be.howest.mariobros.sprites.TileObjects.Level;
 
 
 /**
@@ -85,6 +87,11 @@ public class B2WorldCreator {
         for(MapObject object : map.getLayers().get(7).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
             turtles.add(new Turtle(screen, rect.getX() / MarioBros.PPM, rect.getY() / MarioBros.PPM));
+        }
+
+        //create level bodies/fixtures
+        for(MapObject object : map.getLayers().get(8).getObjects().getByType(RectangleMapObject.class)){
+            new Level(screen,object);
         }
 
     }
