@@ -212,7 +212,7 @@ public class PlayScreen implements Screen{
     }
 
     public void showGameOver(){
-        game.setScreen(new GameOverScreen(game));
+        game.setScreen(new GameOverScreen(game, hud));
         dispose();
     }
 

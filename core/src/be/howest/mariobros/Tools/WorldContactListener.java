@@ -16,7 +16,7 @@ import be.howest.mariobros.sprites.TileObjects.InteractiveTileObject;
  * Created by Egon on 31/10/2017.
  */
 
-public class WorldContactListener implements ContactListener {
+public class  WorldContactListener implements ContactListener {
 
     private MarioBros game;
     private int nextLevel;

@@ -27,7 +27,7 @@ public class GameOverScreen implements Screen {
 
     private Game game;
 
-    public GameOverScreen(Game game){
+    public GameOverScreen(Game game, Hud hud){
         this.game = game;
         viewport = new FitViewport(MarioBros.V_WIDTH, MarioBros.V_HEIGHT, new OrthographicCamera());
         stage = new Stage(viewport, ((MarioBros)game).batch);
@@ -41,9 +41,12 @@ public class GameOverScreen implements Screen {
         Label gameOverLabel = new Label("GAME OVER", font);
         Label playAgainLabel = new Label("Click to play again", font);
 
+        MyTextInputListener listener = new MyTextInputListener(hud);
+        Gdx.input.getTextInput(listener, "Enter your name", "", "Your name");
+
         table.add(gameOverLabel).expandX();
-        stage.addActor(table);
         table.add(playAgainLabel).expandX().padTop(10f);
+        stage.addActor(table);
     }
 
     @Override
