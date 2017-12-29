@@ -35,13 +35,19 @@ public class GameOverScreen implements Screen {
     private Viewport viewport;
     private Stage stage;
 
+    private int score;
     private MarioBros game;
     private Array<Highscore> highscores;
 
     public GameOverScreen(MarioBros game, Hud hud, int level){
-        MyTextInputListener listener = new MyTextInputListener(hud, level);
+        MyTextInputListener listener = new MyTextInputListener(game,hud, level);
         Gdx.input.getTextInput(listener, "Enter your name", "", "Your name");
         this.game = game;
+        if(hud.getScore()*level - hud.getTime() < 0){
+            this.score = 0;
+        }else{
+            this.score = hud.getScore()*level - hud.getTime();
+        }
         viewport = new FitViewport(MarioBros.V_WIDTH, MarioBros.V_HEIGHT, new OrthographicCamera());
         stage = new Stage(viewport, ((MarioBros)game).batch);
 
@@ -120,6 +126,8 @@ public class GameOverScreen implements Screen {
         BitmapFont font = new BitmapFont(); //or use alex answer to use custom font
         game.batch.begin();
         font.draw(game.batch, "Click to play again", 10, 20);
+        font.draw(game.batch, "your score: " +this.score, 10, 35);
+
         for (Highscore highscore : highscores) {
             font.draw(game.batch, highscore.getName(), xName, y);
             font.draw(game.batch, highscore.getScore(), xScore, y);

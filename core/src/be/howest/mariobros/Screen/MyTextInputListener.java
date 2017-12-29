@@ -1,5 +1,6 @@
 package be.howest.mariobros.Screen;
 
+import be.howest.mariobros.MarioBros;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 
@@ -18,9 +19,11 @@ import java.net.URL;
 public class MyTextInputListener implements Input.TextInputListener {
     private Hud hud;
     private int level;
-    public MyTextInputListener(Hud hud, int level){
+    private MarioBros game;
+    public MyTextInputListener(MarioBros game,Hud hud, int level){
         this.hud = hud;
         this.level = level;
+        this.game = game;
     }
     @Override
     public void input (String text) {
@@ -34,6 +37,9 @@ public class MyTextInputListener implements Input.TextInputListener {
     }
 
     public void postHighscore(String username, int score){
+        if(score < 0){
+            score = 0;
+        }
         try{
 
             String url = "https://us-central1-mariobros-187710.cloudfunctions.net/newScore";
