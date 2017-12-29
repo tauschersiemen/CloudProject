@@ -38,8 +38,8 @@ public class GameOverScreen implements Screen {
     private MarioBros game;
     private Array<Highscore> highscores;
 
-    public GameOverScreen(MarioBros game, Hud hud){
-        MyTextInputListener listener = new MyTextInputListener(hud);
+    public GameOverScreen(MarioBros game, Hud hud, int level){
+        MyTextInputListener listener = new MyTextInputListener(hud, level);
         Gdx.input.getTextInput(listener, "Enter your name", "", "Your name");
         this.game = game;
         viewport = new FitViewport(MarioBros.V_WIDTH, MarioBros.V_HEIGHT, new OrthographicCamera());
@@ -47,7 +47,6 @@ public class GameOverScreen implements Screen {
 
 
         try{
-
 
 
             String url = "https://us-central1-mariobros-187710.cloudfunctions.net/getTopHighscores";

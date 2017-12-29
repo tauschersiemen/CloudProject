@@ -17,15 +17,16 @@ import java.net.URL;
 
 public class MyTextInputListener implements Input.TextInputListener {
     private Hud hud;
-    public MyTextInputListener(Hud hud){
+    private int level;
+    public MyTextInputListener(Hud hud, int level){
         this.hud = hud;
+        this.level = level;
     }
     @Override
     public void input (String text) {
         Gdx.app.log("Your name", text);
-
-        Gdx.app.log("Your score",  hud.getScore() + "");
-        postHighscore(text,hud.getScore());
+        Gdx.app.log("Your score",  hud.getScore()*level - hud.getTime() + "");
+        postHighscore(text,hud.getScore()*level - hud.getTime());
     }
 
     @Override
@@ -34,8 +35,6 @@ public class MyTextInputListener implements Input.TextInputListener {
 
     public void postHighscore(String username, int score){
         try{
-
-
 
             String url = "https://us-central1-mariobros-187710.cloudfunctions.net/newScore";
             URL obj = new URL(url);

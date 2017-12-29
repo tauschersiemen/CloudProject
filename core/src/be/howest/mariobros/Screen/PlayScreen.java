@@ -68,7 +68,7 @@ public class PlayScreen implements Screen{
     private LinkedBlockingQueue<ItemDef> itemsToSpawn;
 
     private int nextLevel;
-
+    private int level;
 
     public PlayScreen(MarioBros game, int level, Hud hud){
 
@@ -76,6 +76,7 @@ public class PlayScreen implements Screen{
 
         this.game = game;
 
+        this.level = level;
         this.nextLevel = level +1;
         //create cam used to follow mario through the cam world;
         gamecam = new OrthographicCamera();
@@ -226,7 +227,7 @@ public class PlayScreen implements Screen{
     }
 
     public void showGameOver(){
-        game.setScreen(new GameOverScreen(game, hud));
+        game.setScreen(new GameOverScreen(game, hud, level));
         dispose();
     }
 

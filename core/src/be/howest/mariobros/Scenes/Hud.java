@@ -86,7 +86,9 @@ public class Hud implements Disposable{
     public int getScore(){
         return score;
     }
-
+    public int getTime(){
+        return worldTimer;
+    }
 
     @Override
     public void dispose() {
