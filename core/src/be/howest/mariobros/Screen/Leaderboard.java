@@ -1,6 +1,7 @@
 package be.howest.mariobros.Screen;
 
 import be.howest.mariobros.Highscore;
+import be.howest.mariobros.MarioBros;
 import be.howest.mariobros.Scenes.Hud;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -18,29 +19,24 @@ import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-import be.howest.mariobros.MarioBros;
-
 import javax.net.ssl.HttpsURLConnection;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 
-
-/**
- * Created by Egon on 19/11/2017.
- */
-
-public class GameOverScreen implements Screen {
+public class Leaderboard implements Screen{
     private Viewport viewport;
     private Stage stage;
 
     private MarioBros game;
     private Array<Highscore> highscores;
 
-    public GameOverScreen(MarioBros game, Hud hud){
-        MyTextInputListener listener = new MyTextInputListener(hud);
-        Gdx.input.getTextInput(listener, "Enter your name", "", "Your name");
+    public Leaderboard(MarioBros game){
+        this.game = game;
+        viewport = new FitViewport(MarioBros.V_WIDTH, MarioBros.V_HEIGHT, new OrthographicCamera());
+        stage = new Stage(viewport, ((MarioBros)game).batch);
+
         this.game = game;
         viewport = new FitViewport(MarioBros.V_WIDTH, MarioBros.V_HEIGHT, new OrthographicCamera());
         stage = new Stage(viewport, ((MarioBros)game).batch);
@@ -112,25 +108,26 @@ public class GameOverScreen implements Screen {
 
     @Override
     public void render(float delta) {
-
-        int xName = 10;
-        int xScore = 250;
-        int y = 200;
+        int xName = 500;
+        int xScore = 700;
+        int y = 500;
         Gdx.gl.glClearColor(0,0,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        BitmapFont font = new BitmapFont(); //or use alex answer to use custom font
+        BitmapFont font = new BitmapFont();
         game.batch.begin();
-        font.draw(game.batch, "Click to play again", 10, 20);
+        font.draw(game.batch, "Leaderboard", 500, 525);
+        font.draw(game.batch, "Click to go to back to the menu", 500, 200);
         for (Highscore highscore : highscores) {
             font.draw(game.batch, highscore.getName(), xName, y);
             font.draw(game.batch, highscore.getScore(), xScore, y);
             y -= 15;
         }
+
         game.batch.end();
         if(Gdx.input.justTouched()) {
-            game.setScreen(new PlayScreen((MarioBros) game,1, null));
-            dispose();
+            game.setScreen(new MenuScreen(game));
         }
+
     }
 
     @Override
@@ -158,4 +155,49 @@ public class GameOverScreen implements Screen {
         stage.dispose();
     }
 
+    public void getHighscores(int number){
+        try{
+
+
+
+            String url = "https://us-central1-mariobros-187710.cloudfunctions.net/getTopHighscores";
+            URL obj = new URL(url);
+            HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
+
+            //add reuqest header
+            con.setRequestMethod("POST");
+            con.setRequestProperty("User-Agent", "mozilla/5.0");
+            con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
+
+            String urlParameters = "number=10";
+
+            // Send post request
+            con.setDoOutput(true);
+            DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+            wr.writeBytes(urlParameters);
+            wr.flush();
+            wr.close();
+
+            int responseCode = con.getResponseCode();
+            System.out.println("\nSending 'POST' request to URL : " + url);
+            System.out.println("Post parameters : " + urlParameters);
+            System.out.println("Response Code : " + responseCode);
+
+            BufferedReader in = new BufferedReader(
+                    new InputStreamReader(con.getInputStream()));
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
+            }
+            in.close();
+
+            //print result
+            System.out.println(response.toString());
+
+        }catch(Exception e){
+
+        }
+    }
 }

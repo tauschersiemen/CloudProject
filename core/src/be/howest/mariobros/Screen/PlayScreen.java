@@ -1,5 +1,6 @@
 package be.howest.mariobros.Screen;
 
+import be.howest.mariobros.Highscore;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -14,9 +15,15 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.JsonReader;
+import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import be.howest.mariobros.MarioBros;
@@ -28,6 +35,8 @@ import be.howest.mariobros.sprites.Items.Item;
 import be.howest.mariobros.sprites.Items.ItemDef;
 import be.howest.mariobros.sprites.Items.Mushroom;
 import be.howest.mariobros.sprites.Mario;
+
+import javax.net.ssl.HttpsURLConnection;
 
 
 /**
@@ -62,6 +71,7 @@ public class PlayScreen implements Screen{
 
 
     public PlayScreen(MarioBros game, int level, Hud hud){
+
         atlas = new TextureAtlas("Mario_and_Enemies.pack");
 
         this.game = game;

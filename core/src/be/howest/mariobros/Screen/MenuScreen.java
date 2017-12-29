@@ -47,8 +47,6 @@ public class MenuScreen implements Screen {
         leaderbord = new Texture("trophy.png");
         background = new Texture("Mario.png");
 
-        postHighscore("tom",1);
-        System.out.println(getUsers());
 
     }
 
@@ -76,11 +74,12 @@ public class MenuScreen implements Screen {
             }
         }
         //check for trophy click
-        /*if(Gdx.input.getX() > TROPHY_X && Gdx.input.getX() < TROPHY_X + TROPHY_WIDTH && Gdx.input.getY()
-                > TROPHY_Y && Gdx.input.getY()< TROPHY_Y + TROPHY_HEIGHT){
-            game.batch.draw(leaderbord, TROPHY_X ,  TROPHY_Y, TROPHY_WIDTH, TROPHY_HEIGHT);
-
-        }*/
+        if(Gdx.input.getX() > TROPHY_X && Gdx.input.getX() < TROPHY_X + TROPHY_WIDTH && Gdx.input.getY()
+                > TROPHY_Y+PLAY_BUTTON_HEIGHT*2 && Gdx.input.getY()< TROPHY_Y + +PLAY_BUTTON_HEIGHT*2+TROPHY_HEIGHT){
+            if (Gdx.input.isTouched()) {
+                game.setScreen(new Leaderboard(game));
+            }
+        }
 
         game.batch.end();
     }
@@ -114,7 +113,7 @@ public class MenuScreen implements Screen {
         String users = "";
         try{
             StringBuilder result = new StringBuilder();
-            URL url = new URL("https://us-central1-mariobros-187710.cloudfunctions.net/getAllUsers");
+            URL url = new URL("https://us-central1-mariobros-187710.cloudfunctions.net/getTopHighscores");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -131,50 +130,7 @@ public class MenuScreen implements Screen {
 
     }
 
-    public void postHighscore(String username, int score){
-        try{
 
 
 
-            String url = "https://us-central1-mariobros-187710.cloudfunctions.net/newScore";
-            URL obj = new URL(url);
-            HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
-
-            //add reuqest header
-            con.setRequestMethod("POST");
-            con.setRequestProperty("User-Agent", "mozilla/5.0");
-            con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
-
-            String urlParameters = "username=siemen&score=5";
-
-            // Send post request
-            con.setDoOutput(true);
-            DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-            wr.writeBytes(urlParameters);
-            wr.flush();
-            wr.close();
-
-            int responseCode = con.getResponseCode();
-            System.out.println("\nSending 'POST' request to URL : " + url);
-            System.out.println("Post parameters : " + urlParameters);
-            System.out.println("Response Code : " + responseCode);
-
-            BufferedReader in = new BufferedReader(
-                    new InputStreamReader(con.getInputStream()));
-            String inputLine;
-            StringBuffer response = new StringBuffer();
-
-            while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
-            }
-            in.close();
-
-            //print result
-            System.out.println(response.toString());
-
-        }catch(Exception e){
-
-        }
-
-    }
 }
